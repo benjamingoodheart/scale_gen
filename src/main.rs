@@ -1,6 +1,8 @@
+#![allow(warnings)]
 use rand::random_range;
 use rustyline::{ DefaultEditor, Result };
 use colored::{ Colorize };
+
 
 struct ScaleLib<'a> {
     all_notes: Vec<&'a str>,
