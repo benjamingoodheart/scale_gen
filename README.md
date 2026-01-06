@@ -24,8 +24,3 @@ In /scale_gen directory:
 ```
 ./target/release/scale_gen 
 ```
-### Create a shortcut
-
-```
-alias -g scale_gen='~/<path_to>/scale_gen/target/release/scale_gen' 
-```
