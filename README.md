@@ -3,6 +3,7 @@
 ## About
 
 Randomly generate scale ideas to quickly start a new song. 
+![Scale Generator Demo](.demos/scale_generator.gif)
 
 ## Installation
 If you do not already have rust and cargo installed on your machine, first follow the directions as detailed [here](https://doc.rust-lang.org/cargo/getting-started/installation.html).
@@ -23,7 +24,7 @@ Download msi application installer from the releases page and following the inst
 ### Mac/Linux
 In /scale_gen directory:
 ```
-./target/release/scale_gen 
+./target/release/scale_generator
 ```
 
 ### Windows
