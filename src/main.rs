@@ -46,7 +46,7 @@ impl<'a> ScaleLib<'a> {
                 "Minor Pentatonic",
                 "Major Pentatonic",
                 "Harmonic Minor",
-                "Harmonic Mator",
+                "Harmonic Major",
                 "Dorian #4",
                 "Phrygian Dominant",
                 "Melodic Minor",
