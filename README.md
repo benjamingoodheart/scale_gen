@@ -17,10 +17,14 @@ cargo build --release
 ```
 
 ### Windows
-TODO
+Download msi application installer from the releases page and following the instructions.
 
 ## Run
+### Mac/Linux
 In /scale_gen directory:
 ```
 ./target/release/scale_gen 
 ```
+
+### Windows
+Search "Scale_Generator" and double click the results. You can also find it in `C:\Program Files\Scale_Generator`
