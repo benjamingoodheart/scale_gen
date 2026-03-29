@@ -2,7 +2,7 @@
 use rand::random_range;
 use rustyline::{ DefaultEditor, Result };
 use colored::{ Colorize };
-
+mod cli;
 
 struct ScaleLib<'a> {
     all_notes: Vec<&'a str>,
@@ -107,16 +107,18 @@ fn main() {
 }
 
 fn prompt() -> Result<String> {
+    /**
     let mut rl = DefaultEditor::new()?;
     println!("{} {}/{}", "Try again?".italic(), "Y".green(), "N".red());
     let readline = rl.readline(">> ")?;
-    if readline.trim().to_uppercase() == "Y" || readline.trim().to_uppercase() == "YES" {
-        println!("Lets try this again...");
-        let _ = main();
-    } else {
-        println!("Goodbye!");
+    match *readline.trim().to_uppercase(){
+        "Y" => {println!("Let's try this again..."); let _ = main();},
+        _ => println!("Goodbye!")
     }
+
     Ok(readline)
+    */
+    Ok("Ok".to_string())
 }
 
 fn driver() {
