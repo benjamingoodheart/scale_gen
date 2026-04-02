@@ -101,8 +101,34 @@ impl Scale {
     }
 }
 
+struct BPM {
+    floor_bpm: i32,
+    ceiling_bpm: i32,
+}
+
+impl BPM {
+    fn new()->BPM{
+        BPM{
+            floor_bpm: 60,
+            ceiling_bpm: 225,
+        }
+    }
+    fn get_random_bpm(&self)->i32{
+        let my_bpm = random_range(self.floor_bpm..self.ceiling_bpm);
+        my_bpm
+    }
+}
+
 fn main() {
-    driver();
+    let args = cli::Cli::run();
+    let b = BPM::new();
+    match args.bpm{
+        Some(true) => {
+            let rand_bpm = b.get_random_bpm();
+            driver(Some(rand_bpm));
+        },
+        _ => {driver(None);}
+    }
     let _ = prompt();
 }
 
@@ -121,18 +147,34 @@ fn prompt() -> Result<String> {
     Ok("Ok".to_string())
 }
 
-fn driver() {
+fn driver(rand_bpm:Option<i32>) {
     let lib = ScaleLib::new();
     let note = lib.get_random_note();
     let scale = lib.get_random_scale();
 
     let s = Scale::new(&note, &scale);
-    println!(
-        "{} {} {}",
-        "Why don't you try:".italic(),
-        s.note_name.green().bold(),
-        s.scale_name.green().bold()
-    );
+    let has_bpm = rand_bpm.is_some();
+    if has_bpm == true  {
+        println!(
+            "{} {} {} {} {} {}",
+            "Why don't you try:".italic(),
+            s.note_name.green().bold(),
+            s.scale_name.green().bold(),
+            "at".italic(),
+            rand_bpm.expect("Invalid number").to_string().cyan().bold(),
+            "bpm?".cyan().bold(),
+        );
+    }    
+    if has_bpm == false{
+        println!(
+            "{} {} {}{}",
+            "Why don't you try:".italic(),
+            s.note_name.green().bold(),
+            s.scale_name.green().bold(),
+            "?".green().bold()
+        );
+    }
+
 }
 
 #[cfg(test)]
