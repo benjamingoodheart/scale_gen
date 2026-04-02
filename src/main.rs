@@ -117,13 +117,24 @@ impl BPM {
         let my_bpm = random_range(self.floor_bpm..self.ceiling_bpm);
         my_bpm
     }
+    fn set_floor(&mut self,floor_val: i32)->Result<()>{
+        //TODO: add guard rails for higher than ceiling
+        self.floor_bpm = floor_val;
+        Ok(())
+    }
+    fn set_ceiling(&mut self, ceiling_val: i32)->Result<()>{
+       //TODO: add guard rails for lower than floor
+        self.ceiling_bpm = ceiling_val;
+        Ok(())
+    }
 }
 
 fn main() {
     let args = cli::Cli::run();
-    let b = BPM::new();
+    
     match args.bpm{
         Some(true) => {
+            let b = BPM::new();
             let rand_bpm = b.get_random_bpm();
             driver(Some(rand_bpm));
         },
