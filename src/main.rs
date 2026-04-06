@@ -1,146 +1,31 @@
 #![allow(warnings)]
-use rand::random_range;
+use clap::crate_name;
 use rustyline::{ DefaultEditor, Result };
 use colored::{ Colorize };
+use std::io::Write;
+use std::io::{Error,ErrorKind};
+use clap::{Parser, Subcommand};
+use inquire::Confirm;
 mod cli;
+mod scale;
+mod bpm;
 
-struct ScaleLib<'a> {
-    all_notes: Vec<&'a str>,
-    all_scales: Vec<&'a str>,
-}
-
-impl<'a> ScaleLib<'a> {
-    fn new() -> ScaleLib<'a> {
-        ScaleLib {
-            all_notes: vec![
-                "Ab",
-                "A",
-                "A#",
-                "Bb",
-                "B",
-                "C",
-                "C#",
-                "Db",
-                "D",
-                "D#",
-                "Eb",
-                "E",
-                "F",
-                "F#",
-                "Gb",
-                "G",
-                "G#"
-            ],
-            all_scales: vec![
-                "Major",
-                "Minor",
-                "Dorian",
-                "Mixolydian",
-                "Lydian",
-                "Phrygian",
-                "Locrian",
-                "Whole Tone",
-                "Half-whole Dim.",
-                "Whole-half Dim.",
-                "Minor Blues",
-                "Minor Pentatonic",
-                "Major Pentatonic",
-                "Harmonic Minor",
-                "Harmonic Major",
-                "Dorian #4",
-                "Phrygian Dominant",
-                "Melodic Minor",
-                "Lydian Augmented",
-                "Lydian Dominant",
-                "Super Locrian",
-                "8-Tone Spanish",
-                "Bhairav",
-                "Hungarian Minor",
-                "Hirajoshi",
-                "In-sen",
-                "Iwato",
-                "Kumor",
-                "Pelog Selisir",
-                "Peloa Tembung",
-                "Messiaen 3",
-                "Messiaen 4",
-                "Messiaen 5",
-                "Messiaen 6",
-                "Messiaen 7"
-            ],
-        }
-    }
-
-    fn get_random_note(&self) -> String {
-        let note_ind = random_range(0..self.all_notes.len());
-        self.all_notes[note_ind].to_string()
-    }
-    fn get_random_scale(&self) -> String {
-        let scale_ind = random_range(0..self.all_scales.len());
-        self.all_scales[scale_ind].to_string()
-    }
-    fn get_notes_vec_length(&self) -> usize {
-        self.all_notes.len()
-    }
-    fn get_scales_vec_length(&self) -> usize {
-        self.all_scales.len()
-    }
-}
-
-struct Scale {
-    note_name: String,
-    scale_name: String,
-}
-
-impl Scale {
-    fn new(note: &str, scale: &str) -> Scale {
-        Scale {
-            note_name: note.to_string(),
-            scale_name: scale.to_string(),
-        }
-    }
-}
-
-struct BPM {
-    floor_bpm: i32,
-    ceiling_bpm: i32,
-}
-
-impl BPM {
-    fn new()->BPM{
-        BPM{
-            floor_bpm: 60,
-            ceiling_bpm: 225,
-        }
-    }
-    fn get_random_bpm(&self)->i32{
-        let my_bpm = random_range(self.floor_bpm..self.ceiling_bpm);
-        my_bpm
-    }
-    fn set_floor(&mut self,floor_val: i32)->Result<()>{
-        //TODO: add guard rails for higher than ceiling
-        self.floor_bpm = floor_val;
-        Ok(())
-    }
-    fn set_ceiling(&mut self, ceiling_val: i32)->Result<()>{
-       //TODO: add guard rails for lower than floor
-        self.ceiling_bpm = ceiling_val;
-        Ok(())
-    }
-}
-
-fn main() {
+fn main() -> Result<()>{
+    
     let args = cli::Cli::run();
     
     match args.bpm{
         Some(true) => {
-            let b = BPM::new();
+            let b = bpm::BPM::new();
             let rand_bpm = b.get_random_bpm();
             driver(Some(rand_bpm));
         },
         _ => {driver(None);}
     }
     let _ = prompt();
+    
+
+    Ok(())
 }
 
 fn prompt() -> Result<String> {
@@ -155,15 +40,23 @@ fn prompt() -> Result<String> {
 
     Ok(readline)
     */
+    let try_again = Confirm::new("Would you like to another suggestion?").with_default(false).prompt();
+
+    match try_again{
+        Ok(true) => {println!("Great"); main();},
+        Ok(false)=> println!("Cool, goodbye!"),
+        Err(_) => println!("try again")
+    }
     Ok("Ok".to_string())
 }
 
+
 fn driver(rand_bpm:Option<i32>) {
-    let lib = ScaleLib::new();
+    let lib = scale::ScaleLib::new();
     let note = lib.get_random_note();
     let scale = lib.get_random_scale();
 
-    let s = Scale::new(&note, &scale);
+    let s = scale::Scale::new(&note, &scale);
     let has_bpm = rand_bpm.is_some();
     if has_bpm == true  {
         println!(
@@ -190,7 +83,7 @@ fn driver(rand_bpm:Option<i32>) {
 
 #[cfg(test)]
 mod tests {
-    use super::ScaleLib;
+    use crate::scale::ScaleLib;
     // use super::Scale;
     #[test]
     fn basics() {
