@@ -6,9 +6,18 @@ Randomly generate scale ideas to quickly start a new song.
 ![Scale Generator Demo](.demos/scale_generator.gif)
 
 ## Installation
-If you do not already have rust and cargo installed on your machine, first follow the directions as detailed [here](https://doc.rust-lang.org/cargo/getting-started/installation.html).
+Download the executable from the releases page. Double click to open default mode.
 
-### Mac/Linux
+Otherwise in your terminal (in the directory in which it lives):
+```
+./scale_generator
+```
+
+You can optionally pass the `-b` or `-bpm` flags to additionally generate a random bpm. This setting will live for the duration of the session.
+
+
+### Build From Source
+If you do not already have rust and cargo installed on your machine, first follow the directions as detailed [here](https://doc.rust-lang.org/cargo/getting-started/installation.html).
 On the Command Line:
 
 ```
@@ -17,15 +26,7 @@ cd scale_gen
 cargo build --release
 ```
 
-### Windows
-Download msi application installer from the releases page and following the instructions.
-
-## Run
-### Mac/Linux
 In /scale_gen directory:
 ```
 ./target/release/scale_generator
 ```
-
-### Windows
-Search "Scale_Generator" and double click the results. You can also find it in `C:\Program Files\Scale_Generator`
