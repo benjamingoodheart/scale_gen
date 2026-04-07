@@ -3,6 +3,19 @@
 version = 4
 
 [[package]]
+name = "Scale_Generator"
+version = "0.1.1"
+dependencies = [
+ "cargo-wix",
+ "clap",
+ "colored",
+ "inquire",
+ "rand",
+ "rustyline",
+ "shlex",
+]
+
+[[package]]
 name = "aho-corasick"
 version = "1.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -848,19 +861,6 @@ dependencies = [
  "unicode-width",
  "utf8parse",
  "windows-sys 0.60.2",
-]
-
-[[package]]
-name = "scale-generator"
-version = "0.1.1"
-dependencies = [
- "cargo-wix",
- "clap",
- "colored",
- "inquire",
- "rand",
- "rustyline",
- "shlex",
 ]
 
 [[package]]
