@@ -61,7 +61,7 @@
     <Product
         Id='*'
         Name='Scale_Generator'
-        UpgradeCode='2FCA67D5-33A2-4705-8253-FBE872C78062'
+        UpgradeCode='D22E3F8A-2596-471C-853A-5CD70D7DD421'
         Manufacturer='Benjamin Goodheart'
         Language='1033'
         Codepage='1252'
@@ -109,7 +109,7 @@
                     -->
 
                     <Directory Id='Bin' Name='bin'>
-                        <Component Id='Path' Guid='AD0FAF2C-6D9F-4BD9-8A70-416CBEE857BA' KeyPath='yes'>
+                        <Component Id='Path' Guid='EEF0EA39-D1A8-4906-A50C-1B6BC7EFC0C5' KeyPath='yes'>
                             <Environment
                                 Id='PATH'
                                 Name='PATH'
