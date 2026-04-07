@@ -1,16 +1,10 @@
-#![allow(warnings)]
-use clap::crate_name;
-use rustyline::{ DefaultEditor, Result };
 use colored::{ Colorize };
-use std::io::Write;
-use std::io::{Error,ErrorKind};
-use clap::{Parser, Subcommand};
 use inquire::Confirm;
 mod cli;
 mod scale;
 mod bpm;
 
-fn main() -> Result<()>{
+fn main() -> Result<(), String>{
     
     let args = cli::Cli::run();
     
@@ -28,24 +22,13 @@ fn main() -> Result<()>{
     Ok(())
 }
 
-fn prompt() -> Result<String> {
-    /**
-    let mut rl = DefaultEditor::new()?;
-    println!("{} {}/{}", "Try again?".italic(), "Y".green(), "N".red());
-    let readline = rl.readline(">> ")?;
-    match *readline.trim().to_uppercase(){
-        "Y" => {println!("Let's try this again..."); let _ = main();},
-        _ => println!("Goodbye!")
-    }
-
-    Ok(readline)
-    */
+fn prompt() -> Result<String, String> {
     let try_again = Confirm::new("Would you like to another suggestion?").with_default(false).prompt();
 
     match try_again{
-        Ok(true) => {println!("Great"); main();},
+        Ok(true) => {println!("Great, going again..."); let _ = main();},
         Ok(false)=> println!("Cool, goodbye!"),
-        Err(_) => println!("try again")
+        Err(_) => println!("Try again")
     }
     Ok("Ok".to_string())
 }
@@ -84,7 +67,9 @@ fn driver(rand_bpm:Option<i32>) {
 #[cfg(test)]
 mod tests {
     use crate::scale::ScaleLib;
-    // use super::Scale;
+    use clap::command;
+    use clap::arg;
+    use crate::bpm::BPM;
     #[test]
     fn basics() {
         let lib = ScaleLib::new();
@@ -122,4 +107,22 @@ mod tests {
             false
         );
     }
+
+    #[test]
+    fn clap_test_no_args(){
+        command!().debug_assert();
+    }
+    #[test]
+    fn clap_test_bpm_arg(){
+        let _ = command!().arg(arg!(<BPM>).help("generate scale with a random bpm; must start new session to change value"));
+    }
+
+    #[test]
+    fn random_bpm(){
+        let b = BPM::new();
+        let res = b.get_random_bpm();
+        assert!(res >= b.floor_bpm);
+        assert!(res<=b.ceiling_bpm);
+    }
+
 }
