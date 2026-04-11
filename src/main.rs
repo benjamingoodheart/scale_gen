@@ -9,12 +9,12 @@ fn main() -> Result<(), String>{
     let args = cli::Cli::run();
     
     match args.bpm{
-        Some(true) => {
+        true => {
             let b = bpm::BPM::new();
             let rand_bpm = b.get_random_bpm();
             driver(Some(rand_bpm));
         },
-        _ => {driver(None);}
+        false => {driver(None);}
     }
     let _ = prompt();
     
@@ -23,7 +23,7 @@ fn main() -> Result<(), String>{
 }
 
 fn prompt() -> Result<String, String> {
-    let try_again = Confirm::new("Would you like to another suggestion?").with_default(false).prompt();
+    let try_again = Confirm::new("Would you like to try another suggestion?").with_default(false).prompt();
 
     match try_again{
         Ok(true) => {println!("Great, going again..."); let _ = main();},
