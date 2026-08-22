@@ -1,7 +1,9 @@
 use rand::random_range;
+use std::collections::HashMap;
 pub struct ScaleLib<'a> {
     pub all_notes: Vec<&'a str>,
     pub all_scales: Vec<&'a str>,
+    pub scales_grouped_by_mood: HashMap<&'a str, Vec<&'a str>>,
 }
 
 impl<'a> ScaleLib<'a> {
@@ -63,6 +65,7 @@ impl<'a> ScaleLib<'a> {
                 "Messiaen 6",
                 "Messiaen 7"
             ],
+            scales_grouped_by_mood: HashMap::from([("Happy", vec!["Major", "Major Pentatonic"])])
         }
     }
 
