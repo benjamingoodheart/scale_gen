@@ -7,7 +7,17 @@ mod bpm;
 fn main() -> Result<(), String>{
     
     let args = cli::Cli::run();
-    
+
+    match args.mood {
+        Some(cli::Mood::Happy) =>{
+            println!("Happy!");
+            //todo: assign mood to variable
+            //pass variable to driver
+        },
+        Some(cli::Mood::Sad)=> todo!(),
+        Some(cli::Mood::Dreamy) | Some(cli::Mood::Mysterious) => todo!(),
+        None => todo!()
+    }
     match args.bpm{
         true => {
             let b = bpm::BPM::new();
@@ -34,6 +44,7 @@ fn prompt() -> Result<String, String> {
 }
 
 
+//todo: add mood argumnet
 fn driver(rand_bpm:Option<i32>) {
     let lib = scale::ScaleLib::new();
     let note = lib.get_random_note();

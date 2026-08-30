@@ -65,7 +65,7 @@ impl<'a> ScaleLib<'a> {
                 "Messiaen 6",
                 "Messiaen 7"
             ],
-            scales_grouped_by_mood: HashMap::from([("Happy", vec!["Major", "Major Pentatonic"])])
+            scales_grouped_by_mood: HashMap::from([("happy", vec!["Major", "Major Pentatonic"])])
         }
     }
 
